@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOWLOND PRODUCT SEANUAL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Kanit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00f7ff;
+            --primary-dark: #00c7ff;
+            --secondary: #ff00e4;
+            --tertiary: #7700ff;
+            --dark: #0a0a20;
+            --darker: #050510;
+            --light: #ffffff;
+            --accent: #ff2d75;
+            --highlight: #ffcc00;
+            --neon-glow: 0 0 10px rgba(0, 247, 255, 0.8), 0 0 20px rgba(0, 247, 255, 0.6), 0 0 30px rgba(0, 247, 255, 0.4);
+            --bg-gradient: radial-gradient(circle at center, #0a0a20 0%, #050510 100%);
+            --card-gradient: linear-gradient(135deg, rgba(10, 10, 32, 0.7) 0%, rgba(5, 5, 16, 0.9) 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+        
+        body {
+            background: var(--bg-gradient);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Cyberpunk Glow Effects */
+        .cyber-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 247, 255, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+            animation: pulse-glow 8s infinite alternate;
+        }
+        
+        /* Grid Overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 247, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 247, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        /* Welcome Screen */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darker);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: all 1s cubic-bezier(0.77, 0, 0.175, 1);
+            overflow: hidden;
+        }
+        
+        .welcome-screen::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                transparent, 
+                transparent, 
+                transparent, 
+                var(--primary)
+            );
+            animation: rotate 10s linear infinite;
+            z-index: -1;
+        }
+        
+        .welcome-content {
+            text-align: center;
+            max-width: 900px;
+            padding: 40px;
+            position: relative;
+            background: rgba(5, 5, 16, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(0, 199, 255, 0.3);
+            border: 1px solid var(--primary);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+        
+        .welcome-content::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(0, 247, 255, 0.1),
+                transparent
+            );
+            pointer-events: none;
+        }
+        
+        .welcome-logo {
+            height: 180px;
+            margin-bottom: 30px;
+            filter: drop-shadow(var(--neon-glow));
+            animation: pulse 2s infinite, float 6s ease-in-out infinite;
+        }
+        
+        .welcome-title {
+            font-size: 4.5rem;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(to right, var(--primary), var(--secondary), var(--tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 247, 255, 0.5);
+            margin-bottom: 20px;
+            font-weight: 900;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            animation: text-glow 2s infinite alternate;
+        }
+        
+        .welcome-subtitle {
+            font-size: 1.8rem;
+            color: var(--light);
+            opacity: 0.9;
+            margin-bottom: 50px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        
+        .welcome-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1000px;
+        }
+        
+        .welcome-option {
+            padding: 30px 50px;
+            background: linear-gradient(145deg, rgba(0, 247, 255, 0.1), rgba(255, 0, 228, 0.1));
+            border: 2px solid var(--primary);
+            color: var(--light);
+            font-size: 1.5rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+            width: 320px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .welcome-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.6s;
+        }
+        
+        .welcome-option:hover::before {
+            left: 100%;
+        }
+        
+        .welcome-option:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 60px rgba(0, 247, 255, 0.5);
+            border-color: var(--highlight);
+            background: linear-gradient(145deg, rgba(0, 247, 255, 0.2), rgba(255, 0, 228, 0.2));
+        }
+        
+        .welcome-option i {
+            margin-right: 15px;
+            font-size: 1.8rem;
+            color: var(--highlight);
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease, transform 1s ease;
+            transform: translateY(50px);
+        }
+        
+        .main-content.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Header */
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 8%;
+            background: rgba(10, 10, 32, 0.8);
+            border-bottom: 2px solid var(--primary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .main-logo {
+            height: 80px;
+            margin-right: 25px;
+            filter: drop-shadow(var(--neon-glow));
+            animation: logo-rotate 20s linear infinite;
+        }
+        
+        .site-title {
+            font-size: 2.5rem;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(0, 247, 255, 0.5);
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            font-size: 1.3rem;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            padding: 12px 25px;
+            border-radius: 30px;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .nav-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--highlight);
+            transition: width 0.4s;
+        }
+        
+        .nav-btn:hover::after {
+            width: 100%;
+        }
+        
+        .nav-btn:hover {
+            color: var(--highlight);
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
+        }
+        
+        .nav-btn i {
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+        
+        /* Download Section */
+        .download-container {
+            padding: 80px 8%;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 3.5rem;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--light);
+            margin-bottom: 60px;
+            text-align: center;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(0, 247, 255, 0.5);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 247, 255, 0.5);
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .tab-btn {
+            padding: 15px 40px;
+            background: rgba(0, 247, 255, 0.1);
+            border: 2px solid var(--primary);
+            color: var(--light);
+            font-size: 1.3rem;
+            font-family: 'Orbitron', sans-serif;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.5s;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .tab-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 247, 255, 0.3),
+                transparent
+            );
+            transition: 0.6s;
+        }
+        
+        .tab-btn:hover::before {
+            left: 100%;
+        }
+        
+        .tab-btn.active {
+            background: linear-gradient(to right, var(--primary), var(--tertiary));
+            color: var(--dark);
+            font-weight: 600;
+            box-shadow: 0 0 30px rgba(0, 247, 255, 0.7);
+            border-color: var(--highlight);
+        }
+        
+        .tab-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 247, 255, 0.4);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.8s;
+        }
+        
+        .tab-content.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 40px;
+        }
+        
+        .download-card {
+            background: var(--card-gradient);
+            border-left: 5px solid var(--primary);
+            padding: 30px;
+            border-radius: 15px;
+            transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 247, 255, 0.3);
+        }
+        
+        .download-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(0, 247, 255, 0.1),
+                transparent
+            );
+            pointer-events: none;
+        }
+        
+        .download-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 25px 60px rgba(0, 247, 255, 0.4);
+            border-left-color: var(--highlight);
+            border-color: var(--highlight);
+        }
+        
+        .download-info {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .download-title {
+            font-size: 1.8rem;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+        }
+        
+        .download-desc {
+            color: var(--light);
+            opacity: 0.9;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .download-btn {
+            padding: 15px 30px;
+            background: linear-gradient(to right, var(--primary), var(--tertiary));
+            color: var(--dark);
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            transition: all 0.4s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 150px;
+            box-shadow: 0 10px 25px rgba(0, 247, 255, 0.3);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .download-btn:hover::before {
+            left: 100%;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 247, 255, 0.5);
+        }
+        
+        .download-btn i {
+            margin-left: 10px;
+            font-size: 1.2rem;
+        }
+        
+        /* Shop Section */
+        .shop-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            padding: 100px 8%;
+            text-align: center;
+            position: relative;
+        }
+        
+        .shop-title {
+            font-size: 4rem;
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 40px;
+            background: linear-gradient(to right, var(--primary), var(--secondary), var(--tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 247, 255, 0.5);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+        
+        .shop-desc {
+            font-size: 1.5rem;
+            color: var(--light);
+            opacity: 0.9;
+            max-width: 800px;
+            margin-bottom: 60px;
+            line-height: 1.8;
+        }
+        
+        .shop-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 25px 60px;
+            background: linear-gradient(to right, var(--primary), var(--tertiary));
+            color: var(--dark);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            border-radius: 15px;
+            transition: all 0.5s;
+            box-shadow: 0 15px 40px rgba(0, 247, 255, 0.4);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .shop-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: 0.6s;
+            z-index: -1;
+        }
+        
+        .shop-btn:hover::before {
+            left: 100%;
+        }
+        
+        .shop-btn:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 25px 60px rgba(0, 247, 255, 0.6);
+        }
+        
+        .shop-btn i {
+            margin-left: 15px;
+            font-size: 1.5rem;
+        }
+        
+        /* Showcase Section */
+        .showcase-container {
+            padding: 100px 8%;
+            position: relative;
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 50px;
+            margin-top: 60px;
+        }
+        
+        .video-item {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            transition: all 0.6s;
+            background: var(--darker);
+            border: 2px solid var(--primary);
+        }
+        
+        .video-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(0, 247, 255, 0.1),
+                transparent
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .video-item:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 30px 70px rgba(0, 247, 255, 0.4);
+            border-color: var(--highlight);
+        }
+        
+        .video-item iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            z-index: 2;
+        }
+        
+        /* Footer */
+        .main-footer {
+            text-align: center;
+            padding: 60px 8%;
+            margin-top: 100px;
+            background: rgba(10, 10, 32, 0.8);
+            border-top: 2px solid var(--primary);
+            backdrop-filter: blur(15px);
+            position: relative;
+        }
+        
+        .main-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(0, 247, 255, 0.05),
+                transparent
+            );
+            pointer-events: none;
+        }
+        
+        .footer-text {
+            color: var(--light);
+            opacity: 0.8;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+        
+        /* Anime Character */
+        .anime-char {
+            position: fixed;
+            bottom: 50px;
+            right: 50px;
+            width: 280px;
+            z-index: 90;
+            filter: drop-shadow(var(--neon-glow));
+            animation: float 8s ease-in-out infinite;
+            transition: all 0.6s;
+            pointer-events: none;
+        }
+        
+        .anime-char:hover {
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 0 40px rgba(255, 204, 0, 0.9));
+        }
+        
+        /* Music Player */
+        .music-player {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(10, 10, 32, 0.9);
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(15px);
+            border: 2px solid var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s;
+        }
+        
+        .music-player:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 247, 255, 0.5);
+        }
+        
+        .music-info {
+            color: var(--light);
+            margin-right: 20px;
+            font-size: 1rem;
+            opacity: 0.9;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        .music-control {
+            background: var(--primary);
+            border: none;
+            color: var(--dark);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            margin: 0 8px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0, 247, 255, 0.3);
+        }
+        
+        .music-control:hover {
+            background: var(--highlight);
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(255, 204, 0, 0.5);
+        }
+        
+        /* Floating Tech Elements */
+        .tech-element {
+            position: absolute;
+            opacity: 0.1;
+            z-index: -1;
+            animation: float 15s infinite linear;
+        }
+        
+        .tech-element:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            font-size: 5rem;
+            color: var(--primary);
+            animation-delay: 0s;
+        }
+        
+        .tech-element:nth-child(2) {
+            top: 30%;
+            right: 10%;
+            font-size: 4rem;
+            color: var(--secondary);
+            animation-delay: 2s;
+            animation-duration: 20s;
+        }
+        
+        .tech-element:nth-child(3) {
+            bottom: 20%;
+            left: 15%;
+            font-size: 6rem;
+            color: var(--tertiary);
+            animation-delay: 4s;
+            animation-duration: 25s;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        
+        @keyframes pulse-glow {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+            100% { opacity: 0.3; }
+        }
+        
+        @keyframes text-glow {
+            0% { text-shadow: 0 0 20px rgba(0, 247, 255, 0.5); }
+            100% { text-shadow: 0 0 40px rgba(0, 247, 255, 0.8), 0 0 60px rgba(255, 0, 228, 0.5); }
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes logo-rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .tab-content.active {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            }
+            
+            .video-grid {
+                grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .welcome-title {
+                font-size: 3.5rem;
+            }
+            
+            .welcome-option {
+                width: 100%;
+                max-width: 400px;
+                padding: 25px 40px;
+            }
+            
+            .section-title {
+                font-size: 3rem;
+            }
+            
+            .shop-title {
+                font-size: 3.5rem;
+            }
+            
+            .anime-char {
+                width: 220px;
+                right: 30px;
+                bottom: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .welcome-title {
+                font-size: 2.8rem;
+            }
+            
+            .welcome-subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .welcome-logo {
+                height: 150px;
+            }
+            
+            .welcome-option {
+                padding: 20px 30px;
+                font-size: 1.3rem;
+            }
+            
+            .main-header {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            .logo-container {
+                margin-bottom: 20px;
+            }
+            
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .tab-content.active {
+                grid-template-columns: 1fr;
+            }
+            
+            .download-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .download-btn {
+                margin-top: 20px;
+                width: 100%;
+            }
+            
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .shop-title {
+                font-size: 3rem;
+            }
+            
+            .shop-btn {
+                padding: 20px 40px;
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .welcome-title {
+                font-size: 2.2rem;
+            }
+            
+            .welcome-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .welcome-logo {
+                height: 120px;
+            }
+            
+            .welcome-options {
+                gap: 20px;
+            }
+            
+            .welcome-option {
+                padding: 15px 25px;
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .tab-btn {
+                padding: 12px 25px;
+                font-size: 1.1rem;
+            }
+            
+            .shop-title {
+                font-size: 2.5rem;
+            }
+            
+            .shop-desc {
+                font-size: 1.2rem;
+            }
+            
+            .anime-char {
+                width: 180px;
+                right: 20px;
+                bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cyberpunk Glow Effects -->
+    <div class="cyber-glow"></div>
+    <div class="grid-overlay"></div>
+    
+    <!-- Floating Tech Elements -->
+    <div class="tech-element">
+        <i class="fas fa-microchip"></i>
+    </div>
+    <div class="tech-element">
+        <i class="fas fa-gamepad"></i>
+    </div>
+    <div class="tech-element">
+        <i class="fas fa-bolt"></i>
+    </div>
+    
+    <!-- Music Player -->
+    <div class="music-player">
+        <span class="music-info">CYBER BEAT</span>
+        <button class="music-control" onclick="document.getElementById('bgMusic').play()">
+            <i class="fas fa-play"></i>
+        </button>
+        <button class="music-control" onclick="document.getElementById('bgMusic').pause()">
+            <i class="fas fa-pause"></i>
+        </button>
+    </div>
+    
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.youtube.com/embed/kIvF81BRuPI" type="audio/mpeg">
+    </audio>
+    
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-content">
+            <img src="https://img2.pic.in.th/pic/aef6d17414def6ee2b1b2e0e7dc5e59c_1.png" alt="Logo" class="welcome-logo">
+            <h1 class="welcome-title">DOWLOND PRODUCT SEANUAL</h1>
+            <p class="welcome-subtitle">THE ULTIMATE GAMING EXPERIENCE</p>
+            
+            <div class="welcome-options">
+                <div class="welcome-option" onclick="selectOption('download')">
+                    <i class="fas fa-download"></i> DOWNLOAD
+                </div>
+                <div class="welcome-option" onclick="selectOption('shop')">
+                    <i class="fas fa-shopping-cart"></i> SHOP
+                </div>
+                <div class="welcome-option" onclick="selectOption('showcase')">
+                    <i class="fas fa-video"></i> SHOWCASE
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Download Content -->
+    <div class="main-content" id="downloadContent">
+        <header class="main-header">
+            <div class="logo-container">
+                <img src="https://img2.pic.in.th/pic/aef6d17414def6ee2b1b2e0e7dc5e59c_1.png" alt="Logo" class="main-logo">
+                <h1 class="site-title">DOWLOND PRODUCT SEANUAL</h1>
+            </div>
+            
+            <div class="nav-menu">
+                <button class="nav-btn" onclick="showSection('download')">
+                    <i class="fas fa-download"></i> DOWNLOAD
+                </button>
+                <button class="nav-btn" onclick="showSection('shop')">
+                    <i class="fas fa-shopping-cart"></i> SHOP
+                </button>
+                <button class="nav-btn" onclick="showSection('showcase')">
+                    <i class="fas fa-video"></i> SHOWCASE
+                </button>
+            </div>
+        </header>
+        
+        <div class="download-container">
+            <h2 class="section-title">PREMIUM DOWNLOADS</h2>
+            
+            <div class="tabs">
+                <button class="tab-btn active" onclick="openTab('cmd-crack')">CMD CRACK</button>
+                <button class="tab-btn" onclick="openTab('unban')">UNBAN TOOLS</button>
+                <button class="tab-btn" onclick="openTab('valorant')">VALORANT</button>
+            </div>
+            
+            <div id="cmd-crack" class="tab-content active">
+                <div class="download-card">
+                    <div class="download-info">
+                        <h3 class="download-title">BOOST FPS ULTRA</h3>
+                        <p class="download-desc">Maximize your FPS with our advanced optimization tool for ultimate gaming performance</p>
+                    </div>
+                    <a href="https://files.catbox.moe/hb9m3p.rar" class="download-btn" download>
+                        DOWNLOAD <i class="fas fa-arrow-down"></i>
+                    </a>
+                </div>
+                
+                <div class="download-card">
+                    <div class="download-info">
+                        <h3 class="download-title">9800XCMD PRO</h3>
+                        <p class="download-desc">Professional system optimization tool with enhanced features for gamers</p>
+                    </div>
+                    <a href="https://files.catbox.moe/ypbm18.rar" class="download-btn" download>
+                        DOWNLOAD <i class="fas fa-arrow-down"></i>
+                    </a>
+                </div>
+                
+                <div class="download-card">
+                    <div class="download-info">
+                        <h3 class="download-title">ACE ELITE</h3>
+                        <p class="download-desc">Comprehensive gaming tool with all the features you need for competitive play</p>
+                    </div>
+                    <a href="https://files.catbox.moe/ki4t5a.rar" class="download-btn" download>
+                        DOWNLOAD <i class="fas fa-arrow-down"></i>
+                    </a>
+                </div>
+                
+                <div class="download-card">
+                    <div class="download-info">
+                        <h3 class="download-title">DELETE V2 PRO</h3>
+                        <p class="download-desc">Updated version with new features and improved performance</p>
+                    </div>
+                    <a href="https://files.catbox.moe/slnumw.rar" class="download-btn" download>
+                        DOWNLOAD <i class="fas fa-arrow-down"></i>
+                    </a>
+                </div>
+                
+                <div class="download-card">
+                    <div class="download-info">
+                        <h3 class="download-title">HYPER BOOST</h3>
+                        <p class="download-desc">Ultimate performance booster for smooth gaming experience</p>
+                    </div>
+                    <a href="https://files.catbox.moe/p9h445.rar" class="download-btn" download>
+                        DOWNLOAD <i class="fas fa-arrow-down"></i>
+                    </a>
+                </div>
+                
+                <div class="download-card">
+                    <div class="download-info">
+                        <h3 class="download-title">GOD WEAPON UZI V9</h3>
+                        <p class="download-desc">Latest version with enhanced weapon customization</p>
+                    </div>
+                    <a href="https://files.catbox.moe/ko1h8g.rar" class="download-btn" download>
+                        DOWNLOAD <i class="fas fa-arrow-down"></i>
+                    </a>
+                </div>
+                
+                <div class="download-card">
+                    <div class="download-info">
+                        <h3 class="download-title">KENNY V2 ELITE</h3>
+                        <p class="download-desc">Upgraded version with all new features and improvements</p>
+                    </div>
+                    <a href="https://files.catbox.moe/cx01kv.rar" class="download-btn" download>
+                        DOWNLOAD <i class="fas fa-arrow-down"></i>
+                    </a>
+                </div>
+                
+                <div class="download-card">
+                    <div class="download-info">
+                        <h3 class="download-title">UNLIMIT PRO</h3>
+                        <p class="download-desc">Remove all limits and unlock full potential of your games</p>
+                    </div>
+                    <a href="https://files.catbox.moe/v9dnej.rar" class="download-btn" download>
+                        DOWNLOAD <i class="fas fa-arrow-down"></i>
+                    </a>
+                </div>
+                
+                <div class="download-card">
+                    <div class="download-info">
+                        <h3 class="download-title">KENNY ELITE</h3>
+                        <p class="download-desc">Premium version for advanced users with exclusive features</p>
+                    </div>
+                    <a href="https://files.catbox.moe/jpla4k.rar" class="download-btn" download>
+                        DOWNLOAD <i class="fas fa-arrow-down"></i>
+                    </a>
+                </div>
+                
+                <div class="download-card">
+                    <div class="download-info">
+                        <h3 class="download-title">WEAPON CORES PRO</h3>
+                        <p class="download-desc">Advanced weapon customization tool for competitive edge</p>
+                    </div>
+                    <a href="https://files.catbox.moe/j322yc.rar" class="download-btn" download>
+                        DOWNLOAD <i class="fas fa-arrow-down"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div id="unban" class="tab-content">
+                <div class="download-card">
+                    <div class="download-info">
+                        <h3 class="download-title">SPOOFER TX PRO</h3>
+                        <p class="download-desc">Advanced unban tool for TX with high success rate</p>
+                    </div>
+                    <a href="https://files.catbox.moe/zjxj4q.rar" class="download-btn" download>
+                        DOWNLOAD <i class="fas fa-arrow-down"></i>
+                    </a>
+                </div>
+                
+                <div class="download-card">
+                    <div class="download-info">
+                        <h3 class="download-title">UNBAN LAUNCHER</h3>
+                        <p class="download-desc">Easy-to-use launcher for unbanning with multiple features</p>
+                    </div>
+                    <a href="https://mega.nz/file/1gMlwJaB#srHyAb6YG6wDa0RRJ2rVWwMImcx0EK5SwQyg3T2333U" class="download-btn" download>
+                        DOWNLOAD <i class="fas fa-arrow-down"></i>
+                    </a>
+                </div>
+                
+                <div class="download-card">
+                    <div class="download-info">
+                        <h3 class="download-title">BT GB UNBAN</h3>
+                        <p class="download-desc">Specialized tool for unbanning bt gb accounts</p>
+                    </div>
+                    <a href="https://mega.nz/file/MpcyRYSI#J3KwJEZPT-cPX2EzgnwzZlH8QJHHyp_BX-XecWbZtLU" class="download-btn" download>
+                        DOWNLOAD <i class="fas fa-arrow-down"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div id="valorant" class="tab-content">
+                <div class="download-card">
+                    <div class="download-info">
+                        <h3 class="download-title">VALORANT PRO</h3>
+                        <p class="download-desc">Comprehensive tool for Valorant with all premium features</p>
+                    </div>
+                    <a href="https://mega.nz/file/h5Nl0ZDA#kOwVQT-vLsMgItBZPG53xWZwwbkcDvDpeBwWYfRBbSE" class="download-btn" download>
+                        DOWNLOAD <i class="fas fa-arrow-down"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="main-footer">
+            <p class="footer-text">© 2023 DOWLOND PRODUCT SEANUAL - ALL RIGHTS RESERVED</p>
+        </footer>
+    </div>
+    
+    <!-- Shop Content -->
+    <div class="main-content" id="shopContent">
+        <header class="main-header">
+            <div class="logo-container">
+                <img src="https://img2.pic.in.th/pic/aef6d17414def6ee2b1b2e0e7dc5e59c_1.png" alt="Logo" class="main-logo">
+                <h1 class="site-title">DOWLOND PRODUCT SEANUAL</h1>
+            </div>
+            
+            <div class="nav-menu">
+                <button class="nav-btn" onclick="showSection('download')">
+                    <i class="fas fa-download"></i> DOWNLOAD
+                </button>
+                <button class="nav-btn" onclick="showSection('shop')">
+                    <i class="fas fa-shopping-cart"></i> SHOP
+                </button>
+                <button class="nav-btn" onclick="showSection('showcase')">
+                    <i class="fas fa-video"></i> SHOWCASE
+                </button>
+            </div>
+        </header>
+        
+        <div class="shop-container">
+            <h1 class="shop-title">SEANUAL X SPOOFER</h1>
+            <p class="shop-desc">
+                ร้าน FIVEM ที่ดีที่สุด ราคาถูกที่สุด ไม่ว่าจะ วาโล หรือ FIVEM คุ้มราคายอมเยา ตอบแชทไว ชอบก็จัดประหยัดทำไม
+            </p>
+            <a href="https://seanual.xdnz.in.th/" class="shop-btn">
+                GO TO SHOP <i class="fas fa-external-link-alt"></i>
+            </a>
+        </div>
+        
+        <footer class="main-footer">
+            <p class="footer-text">© 2025 DOWLOND PRODUCT SEANUAL - ALL RIGHTS RESERVED</p>
+        </footer>
+    </div>
+    
+    <!-- Showcase Content -->
+    <div class="main-content" id="showcaseContent">
+        <header class="main-header">
+            <div class="logo-container">
+                <img src="https://img2.pic.in.th/pic/aef6d17414def6ee2b1b2e0e7dc5e59c_1.png" alt="Logo" class="main-logo">
+                <h1 class="site-title">DOWLOND PRODUCT SEANUAL</h1>
+            </div>
+            
+            <div class="nav-menu">
+                <button class="nav-btn" onclick="showSection('download')">
+                    <i class="fas fa-download"></i> DOWNLOAD
+                </button>
+                <button class="nav-btn" onclick="showSection('shop')">
+                    <i class="fas fa-shopping-cart"></i> SHOP
+                </button>
+                <button class="nav-btn" onclick="showSection('showcase')">
+                    <i class="fas fa-video"></i> SHOWCASE
+                </button>
+            </div>
+        </header>
+        
+        <div class="showcase-container">
+            <h2 class="section-title">PRODUCT SHOWCASE</h2>
+            
+            <div class="video-grid">
+                <div class="video-item">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/ww6oE4hmcQY?si=h-ZvUDdR8gZrmEUp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                
+                <div class="video-item">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/p3waxBwrMVE?si=lfQ-e1R6S6HmGBgw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                
+                <div class="video-item">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/7OIjV3Wg5Dk?si=iNmtFKEwqnikxFp_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                
+                <div class="video-item">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/4dOgSohhvqc?si=_WRdZZKE66mjlv_J" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="main-footer">
+            <p class="footer-text">© 2023 DOWLOND PRODUCT SEANUAL - ALL RIGHTS RESERVED</p>
+        </footer>
+    </div>
+    
+    <!-- Anime Character -->
+    <img src="https://img5.pic.in.th/file/secure-sv1/3e37b16bdee1041dcdf6515c1f7e991e.png" alt="Anime Character" class="anime-char">
+    
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize particles.js
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 100,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#00f7ff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 2,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ff00e4",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": true,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+        
+        // Function to handle option selection from welcome screen
+        function selectOption(option) {
+            // Hide welcome screen with animation
+            document.getElementById('welcomeScreen').style.opacity = '0';
+            document.getElementById('welcomeScreen').style.transform = 'scale(1.2)';
+            
+            // After animation completes, hide it completely and show selected content
+            setTimeout(() => {
+                document.getElementById('welcomeScreen').style.display = 'none';
+                
+                // Show selected content
+                if (option === 'download') {
+                    document.getElementById('downloadContent').style.display = 'block';
+                    document.getElementById('shopContent').style.display = 'none';
+                    document.getElementById('showcaseContent').style.display = 'none';
+                    setTimeout(() => {
+                        document.getElementById('downloadContent').classList.add('active');
+                    }, 50);
+                } else if (option === 'shop') {
+                    document.getElementById('downloadContent').style.display = 'none';
+                    document.getElementById('shopContent').style.display = 'block';
+                    document.getElementById('showcaseContent').style.display = 'none';
+                    setTimeout(() => {
+                        document.getElementById('shopContent').classList.add('active');
+                    }, 50);
+                } else if (option === 'showcase') {
+                    document.getElementById('downloadContent').style.display = 'none';
+                    document.getElementById('shopContent').style.display = 'none';
+                    document.getElementById('showcaseContent').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('showcaseContent').classList.add('active');
+                    }, 50);
+                }
+                
+                // Auto play music when any option is selected
+                document.getElementById('bgMusic').play();
+            }, 1000);
+        }
+        
+        // Function to switch between sections
+        function showSection(sectionId) {
+            // Hide all sections
+            document.getElementById('downloadContent').classList.remove('active');
+            document.getElementById('shopContent').classList.remove('active');
+            document.getElementById('showcaseContent').classList.remove('active');
+            
+            setTimeout(() => {
+                document.getElementById('downloadContent').style.display = 'none';
+                document.getElementById('shopContent').style.display = 'none';
+                document.getElementById('showcaseContent').style.display = 'none';
+                
+                // Show selected section
+                if (sectionId === 'download') {
+                    document.getElementById('downloadContent').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('downloadContent').classList.add('active');
+                    }, 50);
+                } else if (sectionId === 'shop') {
+                    document.getElementById('shopContent').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('shopContent').classList.add('active');
+                    }, 50);
+                } else if (sectionId === 'showcase') {
+                    document.getElementById('showcaseContent').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('showcaseContent').classList.add('active');
+                    }, 50);
+                }
+            }, 500);
+        }
+        
+        // Tab functionality
+        function openTab(tabId) {
+            // Hide all tab contents
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            // Remove active class from all tab buttons
+            const tabButtons = document.getElementsByClassName('tab-btn');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+            
+            // Show the selected tab content and mark button as active
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+        
+        // Random anime characters
+        const animeCharacters = [
+            'https://i.imgur.com/JQJQJQJ.png',
+            'https://i.imgur.com/XYZXYZXY.png',
+            'https://i.imgur.com/ABCDABCD.png'
+        ];
+        
+        function changeAnimeCharacter() {
+            const randomIndex = Math.floor(Math.random() * animeCharacters.length);
+            document.querySelector('.anime-char').src = animeCharacters[randomIndex];
+        }
+        
+        // Change character every 30 seconds
+        setInterval(changeAnimeCharacter, 30000);
+        
+        // Initial character
+        changeAnimeCharacter();
+        
+        // Add click effect
+        document.addEventListener('click', function(e) {
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple-effect';
+            ripple.style.left = e.clientX + 'px';
+            ripple.style.top = e.clientY + 'px';
+            document.body.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
